@@ -1,0 +1,17 @@
+Current User {{user}}
+<h1>Group {{c}}</h1>
+<h2><b>Members</b></h2>
+<a href="#">Add user</a><br>#doo diz
+{%for i in group_members_list%}
+	{{i}}<br>
+{%endfor%}
+<h2>Messages</h2>
+{%for i in messages%}
+	{{i.sender}}:
+	{{i.message_text}}<br>
+{%endfor%}
+<form method='post'>
+	{%csrf_token%}
+	<input type="text" name="message_text">
+	<input type="submit" value="Send Message">
+</form>

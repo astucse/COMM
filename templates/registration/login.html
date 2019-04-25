@@ -1,0 +1,9 @@
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+{{ form.username.label_tag }}
+<br>{{ form.username }}
+<br>{{ form.password.label_tag }}
+<br>{{ form.password }}
+<br><input type="submit" value="Login">
+<input type="hidden" name="next" value="{{ next }}">
+</form>

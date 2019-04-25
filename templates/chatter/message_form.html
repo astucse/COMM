@@ -1,0 +1,10 @@
+
+<form method='post'>
+	{%csrf_token%}
+	<input type="text" name="message_text">
+	<input type="submit" value="Send Message">
+</form>
+
+{%for i in object_list%}
+{{i}}
+{%endfor%}
