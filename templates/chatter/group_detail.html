@@ -1,7 +1,8 @@
-Current User {{user}}
+Current User: {{user}}
 <h1>Group {{c}}</h1>
 <h2><b>Members</b></h2>
-<a href="#">Add user</a><br>#doo diz
+<a href="{%url 'group_add_user' c.id%}">Add user</a><br><!-- #doo diz -->
+<a href="#">Promote user</a><!-- #doo diztoo -->
 {%for i in group_members_list%}
 	{{i}}<br>
 {%endfor%}
@@ -10,7 +11,7 @@ Current User {{user}}
 	{{i.sender}}:
 	{{i.message_text}}<br>
 {%endfor%}
-<form method='post'>
+<form name='send_message_form' method='post'>
 	{%csrf_token%}
 	<input type="text" name="message_text">
 	<input type="submit" value="Send Message">

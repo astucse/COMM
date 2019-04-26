@@ -1,0 +1,16 @@
+<form method="post"	>
+	{% csrf_token %}
+		<select name="uid">
+	{%for user in users%}	
+			<option value="{{user.id}}">
+				{{user}}
+			</option>
+		
+	{%endfor%}
+		</select>
+	<select name="role"><!-- #If user is admin -->
+		<option value="1">Admin</option>
+		<option value="2">Member</option>
+	</select>
+	<input type="submit" value="Add User">
+</form>

@@ -2,6 +2,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import ListView,DetailView,CreateView,TemplateView
+from django.views import View
 from django.contrib.auth.views import LoginView
 from chatter.models import Message,User,Chatter,Group,GroupMembership
 from django.utils.timezone import now
@@ -47,6 +48,22 @@ class GroupDetail(DetailView):
 		except:
 			pass
 		return self.get(*args,**kwargs)
+class GroupAddUser(TemplateView):
+	model = Group
+	template_name = 'chatter/group_add_user.html'
+	def post(self,*args,**kwargs):
+		try:
+			current_group = Group.objects.get(pk=kwargs['pk'])
+			membership = GroupMembership()
+			membership.user = User.objects.get(pk=self.request.POST['uid'])
+			membership.group = current_group
+			membership.role = self.request.POST['role']
+			membership.save()
+		except:
+			pass
+		return self.get(*args,**kwargs)
+	def get_context_data(self,**kwargs):
+		return {'users':User.objects.all()} #TODO add user friendship/relation
 class GroupCreate(CreateView):
 	model = Group
 	fields = ['name']
@@ -64,6 +81,7 @@ class GroupCreate(CreateView):
 		except:
 			pass
 		return self.get(self,*args,**kwargs)
+
 class ChatterLogin(LoginView):
 	model = Chatter
 	success_url = reverse_lazy('groups')
